@@ -17,11 +17,13 @@ class PackageImageWriteBenchmark extends BenchmarkBase {
   // The benchmark code.
   @override
   void run() {
-      var file = File('lenna-out.png');
-      file.createSync(recursive: true);
+      for(var i = 0; i < 10; i++) {
+        var file = File('lenna-out.png');
+        file.createSync(recursive: true);
 
-      var pngBytes = ImageLib.encodePng(_image!);
-      file.writeAsBytesSync(pngBytes, flush: false);
+        var pngBytes = ImageLib.encodePng(_image!);
+        file.writeAsBytesSync(pngBytes, flush: false);
+      }      
   }
 
   // Not measured setup code executed prior to the benchmark runs.

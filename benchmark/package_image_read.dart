@@ -15,13 +15,15 @@ class PackageImageReadBenchmark extends BenchmarkBase {
   // The benchmark code.
   @override
   void run() {
-    var path = 'lenna.png';
-      
-    var file = File(path);
-      
-    var fileBytes = file.readAsBytesSync();
-    var image = ImageLib.decodeImage(fileBytes);
-    var _ = image!.numberOfChannels * image.width;
+    for(var i = 0; i < 10; i++) {
+      var path = 'lenna.png';
+        
+      var file = File(path);
+        
+      var fileBytes = file.readAsBytesSync();
+      var image = ImageLib.decodeImage(fileBytes);
+      var _ = image!.numberOfChannels * image.width;
+    }
   }
 
   // Not measured setup code executed prior to the benchmark runs.

@@ -1,38 +1,38 @@
 import 'dart:core';
 import 'dart:ffi';
+import 'dart:async';
 import 'package:dart_katla_image/dart_katla_image.dart';
 import 'package:ffi/ffi.dart';
 import 'package:benchmark_harness/benchmark_harness.dart';
 import './custom_emitter.dart';
+import './benchmark_base_async.dart';
 import 'package:dart_katla_image/src/image_ffi.dart';
 
 // Create a new benchmark by extending BenchmarkBase
-class KatlaImageOpencvWriteBenchmark extends BenchmarkBase {
-  KatlaImageOpencvWriteBenchmark() : super('KatlaImageOpencvWriteBenchmark', emitter: CustomEmitter());
+class KatlaImageOpencvWriteAsyncBenchmark extends BenchmarkBaseAsync {
+  KatlaImageOpencvWriteAsyncBenchmark() : super('KatlaImageOpencvWriteAsyncBenchmark', emitter: CustomEmitter());
 
   Image? _image;
 
-  static void main() {
-    KatlaImageOpencvWriteBenchmark().report();
-  }
-
   // The benchmark code.
   @override
-  void run() {
-      for(var i = 0; i < 10; i++) {
-        _image!.writeSync('lenna-out.png');
-      }
+  Future<void> run() async {
+    for(var i = 0; i < 10; i++) {
+      await _image!.write('lenna-out.png');
+    }
   }
 
   // Not measured setup code executed prior to the benchmark runs.
   @override
-  void setup() {
+  Future<void> setup() async {
     _image = Image.read('lenna.png');
 
-    run();
+    await run();
   }
 
   // Not measured teardown code executed after the benchmark runs.
   @override
-  void teardown() { }
+  void teardown() {
+    _image!.dispose();
+  }
 }
