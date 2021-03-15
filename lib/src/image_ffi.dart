@@ -163,6 +163,32 @@ class ImageBinding {
   late final _dart_image_line_stride _image_line_stride =
       _image_line_stride_ptr.asFunction<_dart_image_line_stride>();
 
+  int image_channels(
+    ffi.Pointer<ffi.Void> image,
+  ) {
+    return _image_channels(
+      image,
+    );
+  }
+
+  late final _image_channels_ptr =
+      _lookup<ffi.NativeFunction<_c_image_channels>>('image_channels');
+  late final _dart_image_channels _image_channels =
+      _image_channels_ptr.asFunction<_dart_image_channels>();
+
+  void split(
+    ffi.Pointer<ffi.Void> src,
+    ffi.Pointer<ffi.Pointer<ffi.Void>> dest,
+  ) {
+    return _split(
+      src,
+      dest,
+    );
+  }
+
+  late final _split_ptr = _lookup<ffi.NativeFunction<_c_split>>('split');
+  late final _dart_split _split = _split_ptr.asFunction<_dart_split>();
+
   int dart_init_ffi(
     ffi.Pointer<ffi.Void> initializeApiDLData,
   ) {
@@ -589,6 +615,24 @@ typedef _c_image_line_stride = ffi.Int32 Function(
 
 typedef _dart_image_line_stride = int Function(
   ffi.Pointer<ffi.Void> image,
+);
+
+typedef _c_image_channels = ffi.Int32 Function(
+  ffi.Pointer<ffi.Void> image,
+);
+
+typedef _dart_image_channels = int Function(
+  ffi.Pointer<ffi.Void> image,
+);
+
+typedef _c_split = ffi.Void Function(
+  ffi.Pointer<ffi.Void> src,
+  ffi.Pointer<ffi.Pointer<ffi.Void>> dest,
+);
+
+typedef _dart_split = void Function(
+  ffi.Pointer<ffi.Void> src,
+  ffi.Pointer<ffi.Pointer<ffi.Void>> dest,
 );
 
 typedef _c_dart_init_ffi = ffi.Int32 Function(

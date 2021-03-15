@@ -40,5 +40,7 @@ class KatlaImageOpencvRoiWriteBenchmark extends BenchmarkBase {
 
   // Not measured teardown code executed after the benchmark runs.
   @override
-  void teardown() { }
+  void teardown() {
+    _roiImage.dispose();
+  }
 }

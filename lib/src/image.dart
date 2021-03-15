@@ -53,6 +53,7 @@ class Image {
 
   // TODO nullcheck?
   int get stride => ImageFactory().binding.image_line_stride(_image);
+  int get channels => ImageFactory().binding.image_channels(_image);
 
   Image.create(Size size, {int channels = 4, int depth = 8}) {
     var nativeSize = calloc<Size_32s>().ref;
@@ -105,6 +106,22 @@ class Image {
     ImageFactory().binding.dart_write_image(path.toNativeUtf8().cast(), _image, receivePort.sendPort.nativePort);
 
     return completer.future;
+  }
+
+  void splitSync(List<Image> dest) {
+    final Pointer<Pointer<Void>> pointerPointer =
+      calloc.allocate(sizeOf<Pointer<Void>>() * dest.length);
+
+    try {
+      for(var i=0; i<dest.length; i++) {
+        pointerPointer[i] = dest[i]._image;
+      }
+    
+      ImageFactory().binding.split(_image, pointerPointer);
+    } finally {
+      calloc.free(pointerPointer);
+    }
+
   }
 
   void dispose() {
