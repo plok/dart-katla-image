@@ -23,6 +23,6 @@ ffigen:
   output: 'lib/src/image_ffi.dart'
   headers:
     entry-points:
-      - 'external/katla/image/c-api/image.h'
-      - 'external/katla/dart/c-api/dart-image.h'
-  compiler-opts: '-Iexternal/katla/'
+      - '../katla/image/c-api/image.h'
+      - '../katla/dart/c-api/dart-image.h'
+  compiler-opts: '-I../katla/'

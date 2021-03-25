@@ -51,7 +51,6 @@ class Image {
     return Size(nativeWith,nativeHeight);
   }
 
-  // TODO nullcheck?
   int get stride => ImageFactory().binding.image_line_stride(_image);
   int get channels => ImageFactory().binding.image_channels(_image);
 
