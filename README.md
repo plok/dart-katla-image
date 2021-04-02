@@ -1,9 +1,8 @@
-A library for Dart developers.
+An image library using opencv as backend for Dart developers.
 
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+## Requirements
 
-## Usage
+dart_katla_image requires to have the katla-image & katla-dart libraries in LD_LIBRARY_PATH (https://github.com/plok/katla). Which in turn depends on opencv 
 
 A simple usage example:
 
@@ -11,7 +10,23 @@ A simple usage example:
 import 'package:dart_katla_image/dart_katla_image.dart';
 
 main() {
-  var awesome = new Awesome();
+  var image = Image.read("lenna.png");
+  expect(image.stride, equals(1536));
+
+  var r = Image.create(image.size, channels: 1);
+  var g = Image.create(image.size, channels: 1);
+  var b = Image.create(image.size, channels: 1);
+
+  try {
+    image.splitSync([r, g, b]);
+
+    // do something with the channels
+  } finally {
+    r.dispose();
+    g.dispose();
+    b.dispose();
+    image.dispose();
+  }
 }
 ```
 
@@ -19,4 +34,4 @@ main() {
 
 Please file feature requests and bugs at the [issue tracker][tracker].
 
-[tracker]: http://example.com/issues/replaceme
+[tracker]: https://github.com/plok/dart-katla-image/issues
